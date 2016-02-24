@@ -1,0 +1,37 @@
+<table id="users" class="display">
+	<thead>
+	<tr>
+		<th>Email</th>
+		<th>Name</th>
+		<th>Role</th>
+		<th>Status</th>
+		<th>Action</th>
+	</tr>
+	</thead>
+
+	<tbody>
+		<% @users.each do |user| %>
+			<tr>
+				<td><%= user.email %></td>
+				<td><%= user.name %></td>
+				<td><%= user.role %></td>
+				<td><% if user.verified %>
+						Verified
+					<% else %>
+						Not Verified
+					<% end %>
+				</td>
+				<td><%= link_to "Delete",static_page_path(user), method: :delete,class: 'btn btn-primary' %>
+					<% if ! user.verified %>
+					<%= link_to "verify",edit_static_page_path(user),method: :get,class: "btn btn-default" %>
+					<% end %>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+<script>
+$('#users').dataTable({
+	"aoColumnDefs": [{ 'bSortable': false, 'aTargets': [ 2,3,4] }
+       ]});
+</script>
