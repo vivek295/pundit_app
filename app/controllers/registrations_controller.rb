@@ -1,16 +1,26 @@
 class RegistrationsController < Devise::RegistrationsController
+	prepend_before_action :require_no_authentication, only: [:cancel]
+	after_action :verify_authorized ,only:[:new,:create]
 	def new
 		@user=User.new
+		authorize User
 	end
 
 	def create
+		authorize User
 		@user = User.new(user_params)
 		otp=(0...6).map{|i| rand ((i==0 ? 1 :0)..9)}.join.to_i
     	@user.otp=otp
 		if @user.save
 			UserMailer.otp_email(@user).deliver_now
-			flash[:success] = "Account Created Successfully"
-			redirect_to edit_verification_path(@user)
+			if current_user
+				if current_user.admin?
+					redirect_to index_path
+				end
+			else
+				flash[:success] = "Account Created Successfully"
+				redirect_to edit_verification_path(@user)
+			end
 		else
 			flash[:danger] = "Error While Creating Account"
 			redirect_to root_path
@@ -18,7 +28,6 @@ class RegistrationsController < Devise::RegistrationsController
 	end
 
 	def edit
-		
 		if @current_user.verified
 			super
 		else

@@ -1,3 +1,4 @@
+<div class="table1">
 <table id="users" class="display">
 	<thead>
 	<tr>
@@ -12,26 +13,29 @@
 	<tbody>
 		<% @users.each do |user| %>
 			<tr>
-				<td><%= user.email %></td>
+				<td><%= link_to user.email,static_page_path(user),remote: true %></td>
 				<td><%= user.name %></td>
-				<td><%= user.role %></td>
+				<td><%= select_tag "role",options_for_select([ "user","moderator","admin" ], user.role),class: 'user-role',id: "user_id_#{user.id}"%></td>
+				
 				<td><% if user.verified %>
 						Verified
 					<% else %>
-						Not Verified
+						<%= link_to "verify",verify_static_page_path(user),method: :get,class: 'btn btn-default verify', remote: true %>
 					<% end %>
 				</td>
-				<td><%= link_to "Delete",static_page_path(user), method: :delete,class: 'btn btn-primary' %>
-					<% if ! user.verified %>
-					<%= link_to "verify",edit_static_page_path(user),method: :get,class: "btn btn-default" %>
-					<% end %>
+				<td><%= link_to_if !user.admin?, "Delete",static_page_path(user),data: {confirm: 'Are you sure'},
+				 method: :delete, class: 'btn btn-primary remove',
+				 remote: true%>
+				 <% if current_user.admin? %>
+				 <%= link_to "Edit",edit_static_page_path(user),remote: true,class: "btn btn-warning" %>
+				 <% end %>
 				</td>
 			</tr>
 		<% end %>
 	</tbody>
 </table>
-<script>
-$('#users').dataTable({
-	"aoColumnDefs": [{ 'bSortable': false, 'aTargets': [ 2,3,4] }
-       ]});
-</script>
+<% if current_user.admin? %>
+	<%= link_to "Add User",new_user_registration_path,class: "btn btn-primary" %>
+<% end %>
+</div>
+<div id="user-modal" class="modal fade"></div>

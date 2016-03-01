@@ -4,7 +4,10 @@ Rails.application.routes.draw do
   sessions: 'sessions'
   }
   resources :verifications ,only: [:edit,:update]
-  resources :static_pages, only: [:destroy,:index,:home,:edit]
+  resources :static_pages do
+    get 'change_role',to: 'static_pages#change_role' ,on: :member
+    get 'verify',to: 'static_pages#verify' ,on: :member
+  end
   root 'static_pages#home'
   get 'index' ,to: 'static_pages#index'
   # The priority is based upon order of creation: first created -> highest priority.

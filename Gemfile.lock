@@ -46,6 +46,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    ajax-datatables-rails (0.3.1)
+      railties (>= 3.1)
     arel (6.0.3)
     autoprefixer-rails (6.3.2)
       execjs
@@ -77,6 +79,8 @@ GEM
       warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.6.0)
+    faker (1.6.3)
+      i18n (~> 0.5)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
@@ -175,11 +179,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ajax-datatables-rails
   bootstrap-sass
   byebug
   cancan
   coffee-rails (~> 4.1.0)
   devise
+  faker
   jbuilder (~> 2.0)
   jquery-datatables-rails!
   jquery-rails

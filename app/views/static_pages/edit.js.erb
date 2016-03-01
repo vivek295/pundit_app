@@ -1,0 +1,6 @@
+$("#user-modal").html("<%= escape_javascript(render 'edit') %>")
+$("#user-modal").modal("show")
+
+$('.edit-user').bind('ajax:success',function(){
+	$("#user-modal").modal("hide")
+})

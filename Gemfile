@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
-
+gem 'ajax-datatables-rails'
+gem 'faker'
 gem 'devise'
 gem 'bootstrap-sass'
 gem 'cancan'

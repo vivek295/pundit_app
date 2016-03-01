@@ -1,0 +1,30 @@
+<div class="modal-dialog">
+	<div class="modal-content">
+	<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit User</h4>
+    </div>
+	<div class= "row">
+	<div class="col-md-6 col-md-offset-3">
+
+		<%= form_for(@user,url: static_page_path(@user),class: 'edit-user') do |f| %>
+
+			<%= f.label :name %>
+			<%= f.text_field :name %>
+
+			<%= f.label :email %>
+			<%= f.text_field :email %>
+
+			<%= f.label :password %>
+			<%= f.password_field :password %>
+
+			<%= f.label :password_confirmation %>
+			<%= f.password_field :password_confirmation %>
+
+			<%=f.submit %>
+		<% end %>
+	</div>
+</div>
+	</div>
+	</div>
+</div> 
